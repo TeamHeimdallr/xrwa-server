@@ -996,6 +996,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nestjs/schedule@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@nestjs/schedule@npm:3.0.2"
+  dependencies:
+    cron: 2.4.0
+    uuid: 9.0.0
+  peerDependencies:
+    "@nestjs/common": ^8.0.0 || ^9.0.0 || ^10.0.0
+    "@nestjs/core": ^8.0.0 || ^9.0.0 || ^10.0.0
+    reflect-metadata: ^0.1.12
+  checksum: 3630ed47769908527596e7e20382f31993338e47a0582d5311969fb8d5daf6d8801add4940d0ad9ac0d9f8c846c26ec66bbf3223c67cabffcf16a1c83a7d5e6e
+  languageName: node
+  linkType: hard
+
 "@nestjs/schematics@npm:^9.0.0":
   version: 9.0.4
   resolution: "@nestjs/schematics@npm:9.0.4"
@@ -1292,6 +1306,15 @@ __metadata:
   version: 2.1.2
   resolution: "@types/cookiejar@npm:2.1.2"
   checksum: f6e1903454007f86edd6c3520cbb4d553e1d4e17eaf1f77f6f75e3270f48cc828d74397a113a36942f5fe52f9fa71067bcfa738f53ad468fcca0bc52cb1cbd28
+  languageName: node
+  linkType: hard
+
+"@types/cron@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@types/cron@npm:2.4.0"
+  dependencies:
+    cron: "*"
+  checksum: c763e99a757ea76aee435948c25e0bdaf32ec44c69603088c73e8832df6b121e87932709925fe3e94777833ca30845c31df1167be54c330cf458d348059b9ffc
   languageName: node
   linkType: hard
 
@@ -2949,6 +2972,24 @@ __metadata:
   version: 1.1.1
   resolution: "create-require@npm:1.1.1"
   checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
+  languageName: node
+  linkType: hard
+
+"cron@npm:*":
+  version: 2.4.1
+  resolution: "cron@npm:2.4.1"
+  dependencies:
+    luxon: ^3.2.1
+  checksum: a421a837f99cf18da2f51e3608610f71817c38e6f756b4c85a26f64521dac327ac79861ae3dcf991076f72f3be0daadfffd413b4be0c3b4b029509b89e86b6d4
+  languageName: node
+  linkType: hard
+
+"cron@npm:2.4.0":
+  version: 2.4.0
+  resolution: "cron@npm:2.4.0"
+  dependencies:
+    luxon: ^3.2.1
+  checksum: e1dfc2d2a8cfdee0c17daac791074d904b8d7ecdcd3cf9ca969f8efb00371113d1eb69d60fdebb9e94ac5b3bb3e904a7e687a2fcd276ffdb1f0381e8b6df26bd
   languageName: node
   linkType: hard
 
@@ -5321,6 +5362,13 @@ __metadata:
   version: 7.14.1
   resolution: "lru-cache@npm:7.14.1"
   checksum: d72c6713c6a6d86836a7a6523b3f1ac6764768cca47ec99341c3e76db06aacd4764620e5e2cda719a36848785a52a70e531822dc2b33fb071fa709683746c104
+  languageName: node
+  linkType: hard
+
+"luxon@npm:^3.2.1":
+  version: 3.4.0
+  resolution: "luxon@npm:3.4.0"
+  checksum: ca9b6d0e0a8d156574b7e84014ac8e4b60d116d6d7a0fb65ef48eeb8e4415dad6350b76c5ee34f795cadf8b3f9a5fe7a6885733f561e554c50dffb0b704a840b
   languageName: node
   linkType: hard
 
@@ -7725,11 +7773,13 @@ __metadata:
     "@nestjs/core": ^9.0.0
     "@nestjs/mapped-types": ^1.2.0
     "@nestjs/platform-express": ^9.0.0
+    "@nestjs/schedule": ^3.0.2
     "@nestjs/schematics": ^9.0.0
     "@nestjs/swagger": ^6.2.1
     "@nestjs/testing": ^9.0.0
     "@prisma/client": ^4.8.1
     "@types/cookie-parser": ^1.4.3
+    "@types/cron": ^2.4.0
     "@types/crypto-js": ^4.1.1
     "@types/express": ^4.17.13
     "@types/jest": ^28.1.4

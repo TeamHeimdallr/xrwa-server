@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 
 import { HealthCheckModule } from './domains/health-check/health-check.module';
 
@@ -9,6 +10,7 @@ import { HealthCheckModule } from './domains/health-check/health-check.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    ScheduleModule.forRoot(),
     HealthCheckModule,
   ],
   controllers: [],

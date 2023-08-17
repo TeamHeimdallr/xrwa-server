@@ -10,3 +10,14 @@ datasource db {
 model HealthCheck {
   id Int @id @default(autoincrement())
 }
+
+model Schedule {
+  id Int @id @default(autoincrement())
+
+  account     String
+  destination String
+
+  amount Int
+
+  date DateTime @default(now())
+}
