@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { ContractsModule } from './domains/contracts/contracts.module';
 import { HealthCheckModule } from './domains/health-check/health-check.module';
 
 @Module({
@@ -11,7 +10,6 @@ import { HealthCheckModule } from './domains/health-check/health-check.module';
       envFilePath: '.env',
     }),
     HealthCheckModule,
-    ContractsModule,
   ],
   controllers: [],
   providers: [],
