@@ -29,38 +29,7 @@ jobs:
         with:
           node-version: 'latest'
 
-      - name: SETUP - install dependencies
-        run: yarn
-
-      - name: SETUP - create .env
-        run: |
-          jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
-        env:
-          SECRETS_CONTEXT: ${{ toJson(secrets) }}
-
-      - name: SETUP - update .env
-        run: |
-          jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$VARIABLES_CONTEXT" >> .env
-        env:
-          VARIABLES_CONTEXT: ${{ toJson(vars) }}
-
-      - name: SETUP - configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ env.AWS_SECRET_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: BUILD - update schema
-        run: yarn prisma:push
-
-      - name: BUILD - build project
-        run: yarn build
-
-      - name: BUILD - upload to s3
-        run: aws s3 sync s3://${{ env.AWS_S3_BUCKET }} dist
-
-      - name: DEPLOY - get code from s3 and run
+      - name: DEPLOY
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.AWS_EC2_HOST }}
@@ -68,9 +37,11 @@ jobs:
           key: ${{ env.AWS_EC2_KEY }}
           script: |
             cd xrwa-server
-            aws s3 sync s3://${{ env.AWS_S3_BUCKET }} .
 
             pm2 stop 0
             pm2 delete 0
+
+            yarn prisma:push
+            yarn build
 
             pm2 start yarn --interpreter bash --name "xrwa-server" -- start
