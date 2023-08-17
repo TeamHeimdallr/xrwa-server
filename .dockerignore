@@ -1,0 +1,32 @@
+# compiled output
+.vscode
+.db
+.dist
+dist
+.logs
+.husky
+.github
+node_modules
+yarn-error.log
+Makefile
+README.md
+
+test-auth-front/
+
+# code formatter
+.editorconfig
+.eslintrc
+.gitignore
+.eslintignore
+.huskyrc
+.prettierrc
+.prettieringore
+
+# test
+jest.config.js
+
+# docker
+Dockerfile
+docker-compose.dev.yml
+docker-compose.local.yml
+docker-compose.prod.yml
