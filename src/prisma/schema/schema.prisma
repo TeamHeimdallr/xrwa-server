@@ -11,8 +11,10 @@ model HealthCheck {
   id Int @id @default(autoincrement())
 }
 
-model Deposit {
+model DepositWithdraw {
   id Int @id @default(autoincrement())
+
+  type Type
 
   account     String
   destination String
@@ -20,24 +22,7 @@ model Deposit {
   amount   Int
   currency String
 
-  status DepositStatus
-
-  date DateTime @default(now())
-
-  exchangeRate Float
-  tx           String
-}
-
-model Withdraw {
-  id Int @id @default(autoincrement())
-
-  account     String
-  destination String
-
-  amount   Int
-  currency String
-
-  status WithdrawStatus
+  status Status
 
   date       DateTime @default(now())
   unlockDate DateTime @default(now())
@@ -49,16 +34,16 @@ model Withdraw {
 model Schedule {
   id Int @id @default(autoincrement())
 
-  widthdrawId Int
-
+  scheduleId Int // equal to DepositWithdrawId
   unlockDate DateTime @default(now())
 }
 
-enum DepositStatus {
-  locked
-}
-
-enum WithdrawStatus {
+enum Status {
   locked
   withdrawn
+}
+
+enum Type {
+  deposit
+  withdraw
 }

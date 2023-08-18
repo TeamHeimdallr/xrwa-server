@@ -1,8 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SchedulerRegistry } from '@nestjs/schedule';
-import { Schedule } from '@prisma/client';
 
 import { PrismaService } from '~/prisma/services/prisma.service';
+
+import { CreateScheduleDto } from '../dtos/request.dto';
 
 @Injectable()
 export class SchedulerService {
@@ -14,18 +15,17 @@ export class SchedulerService {
   ) {}
 
   async createSchedule({
-    account,
-    destination,
-    amount,
-    date,
+    scheduleId,
+    unlockDate,
+
     callback,
-  }: Omit<Schedule, 'id'> & { callback?: () => void }) {
+  }: CreateScheduleDto) {
     await this.prisma.$transaction(async (tx) => {
-      const remainTime = new Date(date).getTime() - Date.now();
+      const remainTime = new Date(unlockDate).getTime() - Date.now();
       const handler = setTimeout(callback, remainTime);
 
       const createdSchedule = await tx.schedule.create({
-        data: { account, destination, amount, date },
+        data: { scheduleId, unlockDate },
       });
       this.logger.log(`successfully create schedule - ${createdSchedule.id}`);
 

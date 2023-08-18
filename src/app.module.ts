@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 
-import { CBDCDepositModule } from './domains/cbdc-deposit/cbdc-deposit.module';
+import { CBDCModule } from './domains/cbdc/cbdc.module';
 import { HealthCheckModule } from './domains/health-check/health-check.module';
 
 @Module({
@@ -14,7 +14,7 @@ import { HealthCheckModule } from './domains/health-check/health-check.module';
     ScheduleModule.forRoot(),
 
     HealthCheckModule,
-    CBDCDepositModule,
+    CBDCModule,
   ],
   controllers: [],
   providers: [],
