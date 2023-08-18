@@ -6,7 +6,7 @@ import { AppModule } from '~/app.module';
 import setupSwagger from './configs/setup-swagger';
 
 const bootstrap = async () => {
-  const origin = ['', 'http://localhost:3000'];
+  const origin = ['https://xrwa.world', 'http://localhost:3000'];
 
   const app = await NestFactory.create(AppModule, {
     cors: { origin, credentials: true },
