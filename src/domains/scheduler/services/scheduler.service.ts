@@ -25,7 +25,7 @@ export class SchedulerService {
       const handler = setTimeout(callback, remainTime);
 
       const createdSchedule = await tx.schedule.create({
-        data: { scheduleId, unlockDate },
+        data: { scheduleId },
       });
       this.logger.log(`successfully create schedule - ${createdSchedule.id}`);
 

@@ -5,7 +5,7 @@
   "description": "xrwa-server",
   "license": "MIT",
   "scripts": {
-    "local": "dotenv -e .env -- nest start",
+    "local": "dotenv -e .env -- nest start --watch",
     "build": "dotenv -e .env -- nest build",
     "start": "pm2 start dist/main.js",
     "stop": "pm2 stop all && pm2 delete all",

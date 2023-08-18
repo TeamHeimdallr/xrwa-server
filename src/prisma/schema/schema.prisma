@@ -34,8 +34,7 @@ model DepositWithdraw {
 model Schedule {
   id Int @id @default(autoincrement())
 
-  scheduleId Int // equal to DepositWithdrawId
-  unlockDate DateTime @default(now())
+  scheduleId Int @unique // equal to DepositWithdrawId
 }
 
 enum Status {

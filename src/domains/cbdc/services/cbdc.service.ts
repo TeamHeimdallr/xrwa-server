@@ -97,6 +97,14 @@ export class CBDCService {
     );
 
     await this.client.disconnect();
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.depositWithdraw.update({
+        where: { id },
+        data: { status: Status.withdrawn },
+      });
+      await tx.schedule.delete({ where: { scheduleId: id } });
+    });
   }
 
   async createDepositWithdraw(data: CreateDepositWithdrawDto): Promise<void> {
@@ -112,7 +120,7 @@ export class CBDCService {
           },
         });
         await tx.schedule.create({
-          data: { unlockDate, scheduleId: created.id },
+          data: { scheduleId: created.id },
         });
 
         return;
@@ -134,7 +142,7 @@ export class CBDCService {
       where: { id: { in: ids } },
     });
 
-    withdraws.forEach((withdraw) => {
+    const promises = withdraws.map(async (withdraw) => {
       const { id, unlockDate } = withdraw;
       const name = `schedule-${id}`;
 
@@ -144,6 +152,15 @@ export class CBDCService {
       );
 
       const time = timeDiff < 0 ? 0 : timeDiff;
+      if (time === 0) {
+        await this.prisma.schedule.delete({ where: { scheduleId: id } });
+        await this.prisma.depositWithdraw.update({
+          where: { id },
+          data: { status: Status.withdrawn },
+        });
+        return;
+      }
+
       const callback = async () => {
         await this.withdraw(id);
       };
@@ -159,6 +176,9 @@ export class CBDCService {
         ).toISOString()})`,
       );
     });
+
+    await Promise.all(promises);
+    this.logger.log(`[CUSTOM_LOG] scheduler retrived`);
   }
 
   async resetSchedule() {

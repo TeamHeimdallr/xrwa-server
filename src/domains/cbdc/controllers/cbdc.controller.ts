@@ -28,21 +28,43 @@ export class CBDCController {
   @HttpCode(200)
   @ApiOperation({ summary: 'get all activities of account' })
   @ApiOkResponse()
-  @Get('activities')
+  @Get('')
   async activities(
     @Res() res: Response,
     @Param() params: GetDepositsWithdrawDto,
   ) {
     const { account } = params;
-    const deposits = await this.cbdcService.getActivities(account);
+    const activities = await this.cbdcService.getActivities(account);
 
-    res.status(HttpStatus.OK).send({ data: deposits });
+    res.status(HttpStatus.OK).send({ data: activities });
+  }
+
+  @HttpCode(200)
+  @ApiOperation({ summary: 'get all activities of account' })
+  @ApiOkResponse()
+  @Get('balances')
+  async balances(
+    @Res() res: Response,
+    @Param() params: GetDepositsWithdrawDto,
+  ) {
+    const { account } = params;
+    const activities = await this.cbdcService.getActivities(account);
+
+    const withdrawns = activities
+      .filter((a) => a.type === 'withdraw' && a.status === 'withdrawn')
+      .reduce((acc, cur) => acc + Number(cur.amount), 0);
+
+    const withdrawings = activities
+      .filter((a) => a.type === 'withdraw' && a.status === 'locked')
+      .reduce((acc, cur) => acc + Number(cur.amount), 0);
+
+    res.status(HttpStatus.OK).send({ data: { withdrawns, withdrawings } });
   }
 
   @HttpCode(201)
   @ApiOperation({ summary: 'create deposit' })
   @ApiCreatedResponse()
-  @Post('deposit-withdraw')
+  @Post('')
   async deposit(@Res() res: Response, @Body() body: CreateDepositWithdrawDto) {
     await this.cbdcService.createDepositWithdraw(body);
 
