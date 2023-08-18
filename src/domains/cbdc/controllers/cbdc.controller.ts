@@ -48,17 +48,9 @@ export class CBDCController {
     @Param() params: GetDepositsWithdrawDto,
   ) {
     const { account } = params;
-    const activities = await this.cbdcService.getActivities(account);
+    const balances = await this.cbdcService.getBalances(account);
 
-    const withdrawns = activities
-      .filter((a) => a.type === 'withdraw' && a.status === 'withdrawn')
-      .reduce((acc, cur) => acc + Number(cur.amount), 0);
-
-    const withdrawings = activities
-      .filter((a) => a.type === 'withdraw' && a.status === 'locked')
-      .reduce((acc, cur) => acc + Number(cur.amount), 0);
-
-    res.status(HttpStatus.OK).send({ data: { withdrawns, withdrawings } });
+    res.status(HttpStatus.OK).send({ data: balances });
   }
 
   @HttpCode(201)

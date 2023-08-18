@@ -14,6 +14,7 @@ import { SchedulerService } from '~/domains/scheduler/services/scheduler.service
 import { PrismaService } from '~/prisma/services/prisma.service';
 
 import { CreateDepositWithdrawDto } from '../dtos/request.dto';
+import { GetBalanceWithdrawsDto } from '../dtos/response.dto';
 
 @Injectable()
 export class CBDCService {
@@ -37,11 +38,56 @@ export class CBDCService {
   }
 
   async getActivities(account: string): Promise<DepositWithdraw[]> {
-    const withdraws = await this.prisma.depositWithdraw.findMany({
+    const activities = await this.prisma.depositWithdraw.findMany({
       where: { account },
     });
 
-    return withdraws;
+    return activities;
+  }
+
+  async getBalances(account: string): Promise<GetBalanceWithdrawsDto> {
+    const activities = await this.prisma.depositWithdraw.findMany({
+      where: { account },
+    });
+
+    const withdrawns = activities.filter(
+      (a) => a.type === 'withdraw' && a.status === 'withdrawn',
+    );
+    const withdrawings = activities.filter(
+      (a) => a.type === 'withdraw' && a.status === 'locked',
+    );
+
+    const withdrawnsCurrency = withdrawns.reduce((acc, cur) => {
+      if (acc[cur.currency]) {
+        acc[cur.currency] += Number(cur.amount);
+        return acc;
+      }
+
+      acc[cur.currency] = Number(cur.amount);
+      return acc;
+    }, {});
+
+    const withdrawingsCurrency = withdrawings.reduce((acc, cur) => {
+      if (acc[cur.currency]) {
+        acc[cur.currency] += Number(cur.amount);
+        return acc;
+      }
+
+      acc[cur.currency] = Number(cur.amount);
+      return acc;
+    }, {});
+
+    const withdrawnsAmount = Object.entries<number>(withdrawnsCurrency).map(
+      ([key, value]) => ({ currency: key, amount: value }),
+    );
+    const withdrawingsAmount = Object.entries<number>(withdrawingsCurrency).map(
+      ([key, value]) => ({ currency: key, amount: value }),
+    );
+
+    return {
+      withdrawns: withdrawnsAmount,
+      withdrawings: withdrawingsAmount,
+    };
   }
 
   async withdraw(id: number): Promise<void> {
