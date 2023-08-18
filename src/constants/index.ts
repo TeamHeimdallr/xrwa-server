@@ -33,3 +33,10 @@ export const BASE_URL = IS_PROD
 
 // ASSET ENDPOINT
 export const ASSET_URL = '';
+
+export const XRPL_JSON_RPC_TEST_NET = 'https://s.altnet.rippletest.net:51234/';
+export const XRPL_WSS_TEST_NET = 'wss://s.altnet.rippletest.net:51233/';
+
+export const BSD_WALLET_SEED = process.env.BSD_WALLET_SEED;
+export const ENA_WALLET_SEED = process.env.ENA_WALLET_SEED;
+export const KRW_WALLET_SEED = process.env.KRW_WALLET_SEED;

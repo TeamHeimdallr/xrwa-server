@@ -44,8 +44,8 @@ export class CBDCController {
   @ApiCreatedResponse()
   @Post('deposit-withdraw')
   async deposit(@Res() res: Response, @Body() body: CreateDepositWithdrawDto) {
-    const deposit = await this.cbdcService.createDepositWithdraw(body);
+    await this.cbdcService.createDepositWithdraw(body);
 
-    res.status(HttpStatus.CREATED).send({ data: deposit });
+    res.status(HttpStatus.CREATED).send();
   }
 }

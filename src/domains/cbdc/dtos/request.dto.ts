@@ -10,7 +10,7 @@ export class CreateDepositWithdrawDto {
   account: string;
   destination: string;
 
-  amount: number;
+  amount: string;
   currency: string;
 
   status: Status;

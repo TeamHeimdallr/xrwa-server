@@ -19,7 +19,7 @@ model DepositWithdraw {
   account     String
   destination String
 
-  amount   Int
+  amount   String
   currency String
 
   status Status
