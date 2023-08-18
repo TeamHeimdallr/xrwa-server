@@ -10,3 +10,39 @@ datasource db {
 model HealthCheck {
   id Int @id @default(autoincrement())
 }
+
+model DepositWithdraw {
+  id Int @id @default(autoincrement())
+
+  type Type
+
+  account     String
+  destination String
+
+  amount   String
+  currency String
+
+  status Status
+
+  date       DateTime @default(now())
+  unlockDate DateTime @default(now())
+
+  exchangeRate Float
+  tx           String
+}
+
+model Schedule {
+  id Int @id @default(autoincrement())
+
+  scheduleId Int @unique // equal to DepositWithdrawId
+}
+
+enum Status {
+  locked
+  withdrawn
+}
+
+enum Type {
+  deposit
+  withdraw
+}
