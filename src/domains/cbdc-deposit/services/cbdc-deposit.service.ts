@@ -3,7 +3,7 @@ import { Deposit, DepositStatus } from '@prisma/client';
 
 import { PrismaService } from '~/prisma/services/prisma.service';
 
-import { CreateDepositeDto } from '../dtos/request.dto';
+import { CreateDepositDto } from '../dtos/request.dto';
 
 @Injectable()
 export class CBDCDepositService {
@@ -17,7 +17,7 @@ export class CBDCDepositService {
     return deposits;
   }
 
-  async createDeposit(data: CreateDepositeDto): Promise<Deposit> {
+  async createDeposit(data: CreateDepositDto): Promise<Deposit> {
     const created = await this.prisma.deposit.create({
       data: { ...data, status: DepositStatus.locked },
     });

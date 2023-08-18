@@ -15,7 +15,7 @@ import {
 } from '@nestjs/swagger';
 import { Response } from 'express';
 
-import { CreateDepositeDto, GetDepositsDto } from '../dtos/request.dto';
+import { CreateDepositDto, GetDepositsDto } from '../dtos/request.dto';
 import { CBDCDepositService } from '../services/cbdc-deposit.service';
 
 @Controller('cbdc/deposit')
@@ -34,10 +34,10 @@ export class CBDCDepositController {
   }
 
   @HttpCode(201)
-  @ApiOperation({ summary: 'get all deposits of account' })
+  @ApiOperation({ summary: 'create deposit' })
   @ApiCreatedResponse()
   @Post('')
-  async deposit(@Res() res: Response, @Body() body: CreateDepositeDto) {
+  async deposit(@Res() res: Response, @Body() body: CreateDepositDto) {
     const deposit = await this.cbdcDepositService.createDeposit(body);
 
     res.status(HttpStatus.CREATED).send({ data: deposit });

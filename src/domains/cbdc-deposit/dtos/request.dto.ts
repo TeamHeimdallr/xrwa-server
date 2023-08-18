@@ -2,7 +2,7 @@ export class GetDepositsDto {
   account: string;
 }
 
-export class CreateDepositeDto {
+export class CreateDepositDto {
   account: string;
   destination: string;
 
